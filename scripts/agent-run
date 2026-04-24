@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# agent-run <repo-path> <command>
+# Mounts the target repo into the VM and runs a command inside bwrap
+# THIS CODE IS UNVERIFIED
+
+set -euo pipefail
+
+REPO="${1:?Usage: agent-run <repo-path> <command>}"
+shift
+CMD=("$@")
+
+REPO_ABS="$(realpath "$REPO")"
+REPO_NAME="$(basename "$REPO_ABS")"
+
+echo "[agent-vm] Mounting $REPO_ABS as /work/$REPO_NAME"
+echo "[agent-vm] Command: ${CMD[*]}"
+
+# TODO: implement virtiofs/9p mount + bwrap invocation
+# Placeholder until VM SSH access and virtiofs are tested
+echo "[agent-vm] Not yet implemented — see docs/architecture.md"
+echo "[agent-vm] Next steps:"
+echo "  1. SSH into VM: ssh agent@localhost -p 2222"
+echo "  2. Verify bwrap works inside VM: bwrap --ro-bind /usr /usr --proc /proc --dev /dev bash"
+echo "  3. Mount $REPO_ABS into VM via virtiofs"
+echo "  4. Wire this script to invoke via SSH + bwrap"
